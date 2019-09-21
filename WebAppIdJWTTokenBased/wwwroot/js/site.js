@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+
+    let jwt_Token = null;
+
     $("#createUser").click(function () {
         const registration = {
             Email: $("#cEmail").val(),
@@ -24,8 +27,10 @@
             function (data, status) {
                 $("#loginStatus").text("Status: " + status);
                 $("#loginData").text("Data: " + JSON.stringify(data));
+                jwt_Token = data.token;
                 clearError();
-            });
+            }
+        );
     });
 
     $(document).ajaxError(function (event, xhr, options, exc) {
@@ -37,4 +42,19 @@
         $("#errorStatus").text("");
         $("#errorData").text("");
     }
+
+
+    $("#userEmail").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'api/Account/email',
+            headers: { "Authorization": 'Bearer ' + jwt_Token },
+            success: function (data, status) {
+                $("#emailStatus").text("Status: " + status);
+                $("#emailData").text("Data: " + JSON.stringify(data));
+                clearError();
+            }
+        });
+    });
+
 });

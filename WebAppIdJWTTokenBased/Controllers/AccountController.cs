@@ -16,6 +16,7 @@ namespace WebAppIdJWTTokenBased.Controllers
 {
     [Produces("application/json")]
     [Route("api/Account")]
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -78,9 +79,21 @@ namespace WebAppIdJWTTokenBased.Controllers
             return Unauthorized();
         }
 
+        [HttpGet("email")]
+        public ActionResult<string> GetEmail()
+        {
+            return Ok(User.Identity.Name);//UserName is set to the user´s email
+        }
+
         private async Task<JwtSecurityToken> GenerateTokenAsync(IdentityUser user)
         {
-            var claims = new List<Claim>();
+            var claims = new List<Claim>()
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
 
             int expirationDays = _configuration.GetValue<int>("JWTConfiguration:TokenExpirationDays");
             var singingKey = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWTConfiguration:SingingKey"));
