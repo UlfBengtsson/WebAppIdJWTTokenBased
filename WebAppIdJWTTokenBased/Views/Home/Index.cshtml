@@ -3,6 +3,40 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">JWT Token based</h1>
+</div>
+
+<div>
+    <h3>Create User</h3>
+
+    <input id="cEmail" type="email" placeholder="Email"/>
+    <input id="cPass" type="password" placeholder="Password"/>
+    <input id="cConfPass" type="password" placeholder="Confirm Password"/>
+
+    <button id="createUser">Create</button>
+    <div class="consolePaint">
+        <code id="createStatus"></code>
+        <code id="createData"></code>
+    </div>
+</div>
+
+<div>
+    <h3>Login User</h3>
+
+    <input id="lEmail" type="email" placeholder="Email" />
+    <input id="lPass" type="password" placeholder="Password" />
+
+    <button id="loginUser">Login</button>
+    <div class="consolePaint">
+        <code id="loginStatus"></code>
+        <code id="loginData"></code>
+    </div>
+</div>
+
+<div>
+    <h3>Error returnd</h3>
+    <div class="consolePaint">
+        <code id="errorStatus"></code>
+        <code id="errorData"></code>
+    </div>
 </div>
